@@ -11,13 +11,13 @@ public:
     typedef std::shared_ptr<LogEvent> ptr; // 智能指针类型
     LogEvent();
 private:
-    const char* filename=nullptr; // 文件名
-    int32_t line=0; // 行号 固定位数整数
-    uint32_t elapse=0; // 程序运行时间（毫秒） 无符号32位整数
-    uint32_t threadId=0; // 线程ID 无符号32位整数
-    uint32_t fiberId=0; // 协程ID
-    time_t time=0; // 时间戳
-    std::string content; // 日志内容
+    const char* m_filename=nullptr; // 文件名
+    int32_t m_line=0; // 行号 固定位数整数
+    uint32_t m_elapse=0; // 程序运行时间（毫秒） 无符号32位整数
+    uint32_t m_threadId=0; // 线程ID 无符号32位整数
+    uint32_t m_fiberId=0; // 协程ID
+    time_t m_time=0; // 时间戳
+    std::string m_content; // 日志内容
 };
 
 class LogLevel {
@@ -40,7 +40,7 @@ public:
 
     void log(LogEvent::ptr event, LogLevel::Level level);
 private:
-    LogLevel::Level level; // 日志级别
+    LogLevel::Level m_level; // 日志级别
 };    
 
 
@@ -70,12 +70,12 @@ public:
 
     void addAppender(LogAppender::ptr appender); // 添加日志输出地址
     void delAppender(LogAppender::ptr appender); // 删除日志输出地址
-    LogLevel::Level getLevel() const { return level; } // 获取日志级别
-    void setLevel(LogLevel::Level level) { this->level = level; } // 设置日志级别
+    LogLevel::Level getLevel() const { return m_level; } // 获取日志级别
+    void setLevel(LogLevel::Level level) { m_level = level; } // 设置日志级别
 private:
-    std::string name; // 日志器名称
-    LogLevel::Level level; // 日志级别
-    std::list<LogAppender::ptr> appenders; // 日志输出地址列表
+    std::string m_name; // 日志器名称
+    LogLevel::Level m_level; // 日志级别
+    std::list<LogAppender::ptr> m_appenders; // 日志输出地址列表
 };
 
 class StdoutLogAppender : public LogAppender {// 输出到标准输出
