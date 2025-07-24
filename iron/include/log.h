@@ -1,5 +1,6 @@
 #pragma once 
 #include <string>
+#include <list>
 #include <cstdint>
 #include <memory>
 
@@ -60,10 +61,21 @@ public:
     
     Logger(const std::string& name="root"); // 构造函数
     void log(LogEvent::ptr event, LogLevel::Level level);
+
+    void Debug(LogEvent::ptr event); // 调试日志
+    void Info(LogEvent::ptr event); // 信息日志
+    void Warn(LogEvent::ptr event); // 警告日志
+    void Error(LogEvent::ptr event); // 错误日志
+    void Fatal(LogEvent::ptr event); // 致命错误日志
+
+    void addAppender(LogAppender::ptr appender); // 添加日志输出地址
+    void delAppender(LogAppender::ptr appender); // 删除日志输出地址
+    LogLevel::Level getLevel() const { return level; } // 获取日志级别
+    void setLevel(LogLevel::Level level) { this->level = level; } // 设置日志级别
 private:
     std::string name; // 日志器名称
     LogLevel::Level level; // 日志级别
-    LogAppender::ptr appender; // 日志输出器
+    std::list<LogAppender::ptr> appenders; // 日志输出地址列表
 };
 
 class StdoutLogAppender : public LogAppender {// 输出到标准输出
